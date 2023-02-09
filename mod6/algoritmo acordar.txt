@@ -1,0 +1,7 @@
+1 - acordar;
+2 - Levantar;
+3 - Ir ao banheiro;
+4 - Tomar banho;
+5 - Se vestir;
+6 - Tomar café;
+7 - Ir trabalhar.
