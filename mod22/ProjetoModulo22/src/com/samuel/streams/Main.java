@@ -1,6 +1,5 @@
 package com.samuel.streams;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -16,7 +15,7 @@ public class Main {
         String listaRecebida = entrada.nextLine();
 
 //      Digitei essas inofrmações para testes
-//      sam - m, alice - f, rute - f, marc - m, ellie - f, max - m
+//      sam - m, alice - f, rute - f, mark - m, ellie - f, ryu - m
 
         String[] nomesRecebidos = listaRecebida.split(", ");
 
