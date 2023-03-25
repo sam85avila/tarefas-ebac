@@ -1,42 +1,39 @@
 package com.samuel.domain;
 
+import anotacao.ColunaTabela;
 import anotacao.Tabela;
+import anotacao.TipoChave;
 import com.samuel.dao.Persistente;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name = "TB_CLIENTE")
+@Tabela("TB_CLIENTE")
 public class Cliente implements Persistente {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator= "cliente_seq")
-	@SequenceGenerator(name = "cliente_seq", sequenceName = "cliente_sq",
-			initialValue = 1, allocationSize = 1)
+	@ColunaTabela(dbName = "id", setJavaName = "setId")
 	private Long id;
 	
-	@Column(name = "NOME", nullable = false, length = 100)
+	@ColunaTabela(dbName = "nome", setJavaName = "setNome")
 	private String nome;
 	
-	@Column(name = "CPF", unique = true, nullable = false)
+	@TipoChave("getCpf")
+	@ColunaTabela(dbName = "cpf", setJavaName = "setCpf")
     private Long cpf;
+    
+	@ColunaTabela(dbName = "telefone", setJavaName = "setTelefone")
+    private Long telefone;
 
-	@Column(name = "EMAIL", nullable = false, length = 100)
-	private String email;
-
-	@Column(name = "TELEFONE", nullable = false, length = 20)
-    private Long telelefone;
-
-	@Column(name = "ENDERECO", nullable = false, length = 100)
+	@ColunaTabela(dbName = "email", setJavaName = "setEmail")
+    private String email;
+    
+	@ColunaTabela(dbName = "endereco", setJavaName = "setEndereco")
     private String endereco;
-
-	@Column(name = "NUMERO", nullable = false)
+    
+	@ColunaTabela(dbName = "numero", setJavaName = "setNumero")
     private Integer numero;
-
-	@Column(name = "CIDADE", nullable = false, length = 100)
+    
+	@ColunaTabela(dbName = "cidade", setJavaName = "setCidade")
     private String cidade;
-
-	@Column(name = "ESTADO", nullable = false, length = 50)
+    
+	@ColunaTabela(dbName = "estado", setJavaName = "setEstado")
     private String estado;
     
 	public String getNome() {
@@ -51,7 +48,18 @@ public class Cliente implements Persistente {
 	public void setCpf(Long cpf) {
 		this.cpf = cpf;
 	}
-
+	public Long getTelefone() {
+		return telefone;
+	}
+	public void setTelefone(Long telefone) {
+		this.telefone = telefone;
+	}
+	public String getEndereco() {
+		return endereco;
+	}
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
 	public Integer getNumero() {
 		return numero;
 	}
@@ -77,27 +85,12 @@ public class Cliente implements Persistente {
 		this.id = id;
 	}
 
+
 	public String getEmail() {
 		return email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public Long getTelelefone() {
-		return telelefone;
-	}
-
-	public void setTelelefone(Long telelefone) {
-		this.telelefone = telelefone;
-	}
-
-	public String getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
 	}
 }

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.samuel.dao.factory;
 
 import java.sql.ResultSet;
@@ -10,10 +7,7 @@ import com.samuel.domain.Cliente;
 import com.samuel.domain.Venda;
 import com.samuel.domain.Venda.Status;
 
-/**
- * @author rodrigo.pires
- *
- */
+
 public class VendaFactory {
 
 	public static Venda convert(ResultSet rs) throws SQLException {

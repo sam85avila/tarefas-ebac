@@ -1,13 +1,17 @@
 package com.samuel.services;
 
-import com.samuel.dao.IProdutoJpaDao;
-import com.samuel.dao.generic.IGenericJpaDao;
+import com.samuel.dao.generic.IGenericDAO;
 import com.samuel.domain.Produto;
-import com.samuel.services.generic.jpa.GenericJpaService;
+import com.samuel.exceptions.DAOException;
+import com.samuel.services.generic.GenericService;
 
-public class ProdutoService extends GenericJpaService<Produto, String> implements IProdutoService {
-	public ProdutoService(IGenericJpaDao<Produto, String> genericJpaDao) {
+public class ProdutoService extends GenericService<Produto, String> implements IProdutoService {
+	public ProdutoService(IGenericDAO<Produto, String> genericJpaDao) {
 		super(genericJpaDao);
 	}
 
+	@Override
+	public void excluir(String valor) throws DAOException {
+
+	}
 }

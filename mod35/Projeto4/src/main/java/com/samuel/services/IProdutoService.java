@@ -1,15 +1,9 @@
-/**
- * 
- */
 package com.samuel.services;
 
 import com.samuel.domain.Produto;
-import com.samuel.services.generic.jpa.IGenericJpaService;
+import com.samuel.services.generic.IGenericService;
 
-/**
- * @author rodrigo.pires
- *
- */
-public interface IProdutoService extends IGenericJpaService<Produto, String> {
+
+public interface IProdutoService extends IGenericService<Produto, String> {
 
 }

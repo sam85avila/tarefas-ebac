@@ -1,17 +1,11 @@
-/**
- * 
- */
 package com.samuel.services;
 
 import com.samuel.domain.Cliente;
 import com.samuel.exceptions.DAOException;
-import com.samuel.services.generic.jpa.IGenericJpaService;
+import com.samuel.services.generic.IGenericService;
 
-/**
- * @author rodrigo.pires
- *
- */
-public interface IClienteService extends IGenericJpaService<Cliente, Long> {
+
+public interface IClienteService extends IGenericService<Cliente, Long> {
 
 //	Boolean cadastrar(Cliente cliente) throws TipoChaveNaoEncontradaException;
 //

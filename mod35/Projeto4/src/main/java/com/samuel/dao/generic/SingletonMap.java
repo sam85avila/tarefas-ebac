@@ -1,4 +1,4 @@
-package com.samuel.dao.generic;
+package br.com.rpires.dao.generic;
 
 import java.util.HashMap;
 import java.util.Map;

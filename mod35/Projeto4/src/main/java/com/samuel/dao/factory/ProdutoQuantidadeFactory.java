@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.samuel.dao.factory;
 
 import java.sql.ResultSet;
@@ -9,10 +6,6 @@ import java.sql.SQLException;
 import com.samuel.domain.Produto;
 import com.samuel.domain.ProdutoQuantidade;
 
-/**
- * @author rodrigo.pires
- *
- */
 public class ProdutoQuantidadeFactory {
 
 	public static ProdutoQuantidade convert(ResultSet rs) throws SQLException {

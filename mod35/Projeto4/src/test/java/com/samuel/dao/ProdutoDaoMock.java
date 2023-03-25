@@ -1,43 +1,36 @@
-/**
- * 
- */
 package com.samuel.dao;
 
 import java.util.Collection;
 
-import com.samuel.dao.generic.IGenericJpaDao;
 import com.samuel.domain.Produto;
 import com.samuel.exceptions.DAOException;
 import com.samuel.exceptions.MaisDeUmRegistroException;
 import com.samuel.exceptions.TableException;
 import com.samuel.exceptions.TipoChaveNaoEncontradaException;
 
-/**
- * @author rodrigo.pires
- *
- */
-public class ProdutoDaoMock implements IGenericJpaDao<Produto, String> {
+
+public class ProdutoDaoMock implements IProdutoDAO {
 
 
 	@Override
-	public Produto cadastrar(Produto entity) throws TipoChaveNaoEncontradaException, DAOException {
-		return entity;
+	public Boolean cadastrar(Produto entity) throws TipoChaveNaoEncontradaException, DAOException {
+		return null;
 	}
 
 	@Override
-	public void excluir(Produto entity) throws DAOException {
+	public void excluir(String valor) throws DAOException {
 
 	}
 
 	@Override
-	public Produto alterar(Produto entity) throws TipoChaveNaoEncontradaException, DAOException {
-		return entity;
+	public void alterar(Produto entity) throws TipoChaveNaoEncontradaException, DAOException {
+
 	}
 
 	@Override
-	public Produto consultar(String id) throws MaisDeUmRegistroException, TableException, DAOException {
+	public Produto consultar(String valor) throws MaisDeUmRegistroException, TableException, DAOException {
 		Produto produto = new Produto();
-		produto.setCodigo(id);
+		produto.setCodigo(valor);
 		return produto;
 	}
 

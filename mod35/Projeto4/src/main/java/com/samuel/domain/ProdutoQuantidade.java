@@ -5,32 +5,22 @@ import java.math.BigDecimal;
 import anotacao.ColunaTabela;
 import anotacao.Tabela;
 
-import javax.persistence.*;
 
-@Entity
-@Table(name = "TB_PRODUTO_QUANTIDADE")
+@Tabela("TB_PRODUTO_QUANTIDADE")
 public class ProdutoQuantidade {
-
-	@Id
-	@GeneratedValue(strategy= GenerationType.SEQUENCE, generator="prod_qtd_seq")
-	@SequenceGenerator(name="prod_qtd_seq", sequenceName="sq_prod_qtd", initialValue = 1, allocationSize = 1)
+	
+	@ColunaTabela(dbName = "id", setJavaName = "setId")
 	private Long id;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	//@ColunaTabela(dbName = "id", setJavaName = "setId")
 	private Produto produto;
 	
-	@Column(name = "QUANTIDADE", nullable = false)
+	@ColunaTabela(dbName = "quantidade", setJavaName = "setQuantidade")
 	private Integer quantidade;
-
-	@Column(name = "VALOR_TOTAL", nullable = false)
+	
+	@ColunaTabela(dbName = "valor_total", setJavaName = "setValorTotal")
 	private BigDecimal valorTotal;
-
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_venda_fk",
-			foreignKey = @ForeignKey(name = "fk_prod_qtd_venda"),
-			referencedColumnName = "id", nullable = false)
-	private Venda venda;
-
+	
 	public ProdutoQuantidade() {
 		this.quantidade = 0;
 		this.valorTotal = BigDecimal.ZERO;
@@ -81,12 +71,6 @@ public class ProdutoQuantidade {
 		BigDecimal novoValor = this.produto.getValor().multiply(BigDecimal.valueOf(quantidade));
 		this.valorTotal = this.valorTotal.subtract(novoValor);
 	}
-
-	public Venda getVenda() {
-		return venda;
-	}
-
-	public void setVenda(Venda venda) {
-		this.venda = venda;
-	}
+	
+	
 }

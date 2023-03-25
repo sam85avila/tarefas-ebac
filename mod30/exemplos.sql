@@ -3,6 +3,7 @@ create table tb_cliente (
 	id bigint,
 	nome varchar(50) not null,
 	cpf bigint not null,
+    email varchar(50) not null,
 	tel bigint not null,
 	endereco varchar(50) not null,
 	numero bigint not null,

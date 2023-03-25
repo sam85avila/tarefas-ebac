@@ -1,10 +1,16 @@
 package com.samuel.jpa;
 
-import com.samuel.dao.*;
-import com.samuel.domain.Cliente;
-import com.samuel.domain.Produto;
-import com.samuel.domain.Venda;
-import com.samuel.domain.Venda.Status;
+import com.samuel.dao.jpa.IProdutoJpaDao;
+import com.samuel.dao.jpa.IVendaJpaDao;
+import com.samuel.dao.jpa.VendaExclusaoJpaDao;
+import com.samuel.dao.jpa.ClienteJpaDao;
+import com.samuel.dao.jpa.IClienteJpaDao;
+import com.samuel.dao.jpa.ProdutoJpaDao;
+import com.samuel.dao.jpa.VendaJpaDao;
+import com.samuel.domain.jpa.ClienteJpa;
+import com.samuel.domain.jpa.ProdutoJpa;
+import com.samuel.domain.jpa.VendaJpa;
+import com.samuel.domain.jpa.VendaJpa.Status;
 import com.samuel.exceptions.DAOException;
 import com.samuel.exceptions.MaisDeUmRegistroException;
 import com.samuel.exceptions.TableException;
@@ -32,9 +38,9 @@ public class VendaJpaDAOTest {
 
     private Random random;
 
-    private Cliente cliente;
+    private ClienteJpa cliente;
 
-    private Produto produto;
+    private ProdutoJpa produto;
 
     public VendaJpaDAOTest() {
         this.vendaDao = new VendaJpaDao();
@@ -59,24 +65,24 @@ public class VendaJpaDAOTest {
 
     @Test
     public void pesquisar() throws TipoChaveNaoEncontradaException, MaisDeUmRegistroException, TableException, DAOException {
-        Venda venda = criarVenda("A1");
-        Venda retorno = vendaDao.cadastrar(venda);
+        VendaJpa venda = criarVenda("A1");
+        VendaJpa retorno = vendaDao.cadastrar(venda);
         assertNotNull(retorno);
-        Venda vendaConsultada = vendaDao.consultar(venda.getId());
+        VendaJpa vendaConsultada = vendaDao.consultar(venda.getId());
         assertNotNull(vendaConsultada);
         assertEquals(venda.getCodigo(), vendaConsultada.getCodigo());
     }
 
     @Test
     public void salvar() throws TipoChaveNaoEncontradaException, DAOException, MaisDeUmRegistroException, TableException {
-        Venda venda = criarVenda("A2");
-        Venda retorno = vendaDao.cadastrar(venda);
+        VendaJpa venda = criarVenda("A2");
+        VendaJpa retorno = vendaDao.cadastrar(venda);
         assertNotNull(retorno);
 
         assertTrue(venda.getValorTotal().equals(BigDecimal.valueOf(20)));
         assertTrue(venda.getStatus().equals(Status.INICIADA));
 
-        Venda vendaConsultada = vendaDao.consultar(venda.getId());
+        VendaJpa vendaConsultada = vendaDao.consultar(venda.getId());
         assertTrue(vendaConsultada.getId() != null);
         assertEquals(venda.getCodigo(), vendaConsultada.getCodigo());
     }
@@ -84,8 +90,8 @@ public class VendaJpaDAOTest {
     @Test
     public void cancelarVenda() throws TipoChaveNaoEncontradaException, MaisDeUmRegistroException, TableException, DAOException {
         String codigoVenda = "A3";
-        Venda venda = criarVenda(codigoVenda);
-        Venda retorno = vendaDao.cadastrar(venda);
+        VendaJpa venda = criarVenda(codigoVenda);
+        VendaJpa retorno = vendaDao.cadastrar(venda);
         assertNotNull(retorno);
         assertNotNull(venda);
         assertEquals(codigoVenda, venda.getCodigo());
@@ -93,20 +99,20 @@ public class VendaJpaDAOTest {
         retorno.setStatus(Status.CANCELADA);
         vendaDao.cancelarVenda(venda);
 
-        Venda vendaConsultada = vendaDao.consultar(venda.getId());
+        VendaJpa vendaConsultada = vendaDao.consultar(venda.getId());
         assertEquals(codigoVenda, vendaConsultada.getCodigo());
         assertEquals(Status.CANCELADA, vendaConsultada.getStatus());
     }
 
     @Test
     public void adicionarMaisProdutosDoMesmo() throws TipoChaveNaoEncontradaException, MaisDeUmRegistroException, TableException, DAOException {
-        Venda venda = criarVenda("A4");
-        Venda retorno = vendaDao.cadastrar(venda);
+        VendaJpa venda = criarVenda("A4");
+        VendaJpa retorno = vendaDao.cadastrar(venda);
         assertNotNull(retorno);
         assertNotNull(venda);
         assertEquals("A4", venda.getCodigo());
 
-        Venda vendaConsultada = vendaDao.consultarComCollection(venda.getId());
+        VendaJpa vendaConsultada = vendaDao.consultarComCollection(venda.getId());
         vendaConsultada.adicionarProduto(produto, 1);
 
         assertTrue(vendaConsultada.getQuantidadeTotalProdutos() == 3);
@@ -118,19 +124,19 @@ public class VendaJpaDAOTest {
     @Test
     public void adicionarMaisProdutosDiferentes() throws TipoChaveNaoEncontradaException, MaisDeUmRegistroException, TableException, DAOException {
         String codigoVenda = "A5";
-        Venda venda = criarVenda(codigoVenda);
-        Venda retorno = vendaDao.cadastrar(venda);
+        VendaJpa venda = criarVenda(codigoVenda);
+        VendaJpa retorno = vendaDao.cadastrar(venda);
         assertNotNull(retorno);
         assertNotNull(venda);
         assertEquals(codigoVenda, venda.getCodigo());
 
-        Produto prod = cadastrarProduto(codigoVenda, BigDecimal.valueOf(50));
+        ProdutoJpa prod = cadastrarProduto(codigoVenda, BigDecimal.valueOf(50));
         assertNotNull(prod);
         assertEquals(codigoVenda, prod.getCodigo());
 
         //TODO Usando este método apra evitar a exception org.hibernate.LazyInitializationException
         // Ele busca todos os dados da lista pois a mesma por default é lazy
-        Venda vendaConsultada = vendaDao.consultarComCollection(venda.getId());
+        VendaJpa vendaConsultada = vendaDao.consultarComCollection(venda.getId());
         vendaConsultada.adicionarProduto(prod, 1);
 
         assertTrue(vendaConsultada.getQuantidadeTotalProdutos() == 3);
@@ -141,12 +147,12 @@ public class VendaJpaDAOTest {
 
     @Test(expected = DAOException.class)
     public void salvarVendaMesmoCodigoExistente() throws TipoChaveNaoEncontradaException, DAOException {
-        Venda venda = criarVenda("A6");
-        Venda retorno = vendaDao.cadastrar(venda);
+        VendaJpa venda = criarVenda("A6");
+        VendaJpa retorno = vendaDao.cadastrar(venda);
         assertNotNull(retorno);
 
-        Venda venda1 = criarVenda("A6");
-        Venda retorno1 = vendaDao.cadastrar(venda1);
+        VendaJpa venda1 = criarVenda("A6");
+        VendaJpa retorno1 = vendaDao.cadastrar(venda1);
         assertNull(retorno1);
         assertTrue(venda.getStatus().equals(Status.INICIADA));
     }
@@ -154,17 +160,17 @@ public class VendaJpaDAOTest {
     @Test
     public void removerProduto() throws TipoChaveNaoEncontradaException, MaisDeUmRegistroException, TableException, DAOException {
         String codigoVenda = "A7";
-        Venda venda = criarVenda(codigoVenda);
-        Venda retorno = vendaDao.cadastrar(venda);
+        VendaJpa venda = criarVenda(codigoVenda);
+        VendaJpa retorno = vendaDao.cadastrar(venda);
         assertNotNull(retorno);
         assertNotNull(venda);
         assertEquals(codigoVenda, venda.getCodigo());
 
-        Produto prod = cadastrarProduto(codigoVenda, BigDecimal.valueOf(50));
+        ProdutoJpa prod = cadastrarProduto(codigoVenda, BigDecimal.valueOf(50));
         assertNotNull(prod);
         assertEquals(codigoVenda, prod.getCodigo());
 
-        Venda vendaConsultada = vendaDao.consultarComCollection(venda.getId());
+        VendaJpa vendaConsultada = vendaDao.consultarComCollection(venda.getId());
         vendaConsultada.adicionarProduto(prod, 1);
         assertTrue(vendaConsultada.getQuantidadeTotalProdutos() == 3);
         BigDecimal valorTotal = BigDecimal.valueOf(70).setScale(2, RoundingMode.HALF_DOWN);
@@ -181,17 +187,17 @@ public class VendaJpaDAOTest {
     @Test
     public void removerApenasUmProduto() throws TipoChaveNaoEncontradaException, MaisDeUmRegistroException, TableException, DAOException {
         String codigoVenda = "A8";
-        Venda venda = criarVenda(codigoVenda);
-        Venda retorno = vendaDao.cadastrar(venda);
+        VendaJpa venda = criarVenda(codigoVenda);
+        VendaJpa retorno = vendaDao.cadastrar(venda);
         assertNotNull(retorno);
         assertNotNull(venda);
         assertEquals(codigoVenda, venda.getCodigo());
 
-        Produto prod = cadastrarProduto(codigoVenda, BigDecimal.valueOf(50));
+        ProdutoJpa prod = cadastrarProduto(codigoVenda, BigDecimal.valueOf(50));
         assertNotNull(prod);
         assertEquals(codigoVenda, prod.getCodigo());
 
-        Venda vendaConsultada = vendaDao.consultarComCollection(venda.getId());
+        VendaJpa vendaConsultada = vendaDao.consultarComCollection(venda.getId());
         vendaConsultada.adicionarProduto(prod, 1);
         assertTrue(vendaConsultada.getQuantidadeTotalProdutos() == 3);
         BigDecimal valorTotal = BigDecimal.valueOf(70).setScale(2, RoundingMode.HALF_DOWN);
@@ -208,17 +214,17 @@ public class VendaJpaDAOTest {
     @Test
     public void removerTodosProdutos() throws TipoChaveNaoEncontradaException, MaisDeUmRegistroException, TableException, DAOException {
         String codigoVenda = "A9";
-        Venda venda = criarVenda(codigoVenda);
-        Venda retorno = vendaDao.cadastrar(venda);
+        VendaJpa venda = criarVenda(codigoVenda);
+        VendaJpa retorno = vendaDao.cadastrar(venda);
         assertNotNull(retorno);
         assertNotNull(venda);
         assertEquals(codigoVenda, venda.getCodigo());
 
-        Produto prod = cadastrarProduto(codigoVenda, BigDecimal.valueOf(50));
+        ProdutoJpa prod = cadastrarProduto(codigoVenda, BigDecimal.valueOf(50));
         assertNotNull(prod);
         assertEquals(codigoVenda, prod.getCodigo());
 
-        Venda vendaConsultada = vendaDao.consultarComCollection(venda.getId());
+        VendaJpa vendaConsultada = vendaDao.consultarComCollection(venda.getId());
         vendaConsultada.adicionarProduto(prod, 1);
         assertTrue(vendaConsultada.getQuantidadeTotalProdutos() == 3);
         BigDecimal valorTotal = BigDecimal.valueOf(70).setScale(2, RoundingMode.HALF_DOWN);
@@ -234,8 +240,8 @@ public class VendaJpaDAOTest {
     @Test
     public void finalizarVenda() throws TipoChaveNaoEncontradaException, MaisDeUmRegistroException, TableException, DAOException {
         String codigoVenda = "A10";
-        Venda venda = criarVenda(codigoVenda);
-        Venda retorno = vendaDao.cadastrar(venda);
+        VendaJpa venda = criarVenda(codigoVenda);
+        VendaJpa retorno = vendaDao.cadastrar(venda);
         assertNotNull(retorno);
         assertNotNull(venda);
         assertEquals(codigoVenda, venda.getCodigo());
@@ -243,7 +249,7 @@ public class VendaJpaDAOTest {
         venda.setStatus(Status.CONCLUIDA);
         vendaDao.finalizarVenda(venda);
 
-        Venda vendaConsultada = vendaDao.consultarComCollection(venda.getId());
+        VendaJpa vendaConsultada = vendaDao.consultarComCollection(venda.getId());
         assertEquals(venda.getCodigo(), vendaConsultada.getCodigo());
         assertEquals(Status.CONCLUIDA, vendaConsultada.getStatus());
     }
@@ -251,8 +257,8 @@ public class VendaJpaDAOTest {
     @Test(expected = UnsupportedOperationException.class)
     public void tentarAdicionarProdutosVendaFinalizada() throws TipoChaveNaoEncontradaException, MaisDeUmRegistroException, TableException, DAOException {
         String codigoVenda = "A11";
-        Venda venda = criarVenda(codigoVenda);
-        Venda retorno = vendaDao.cadastrar(venda);
+        VendaJpa venda = criarVenda(codigoVenda);
+        VendaJpa retorno = vendaDao.cadastrar(venda);
         assertNotNull(retorno);
         assertNotNull(venda);
         assertEquals(codigoVenda, venda.getCodigo());
@@ -260,7 +266,7 @@ public class VendaJpaDAOTest {
         venda.setStatus(Status.CONCLUIDA);
         vendaDao.finalizarVenda(venda);
 
-        Venda vendaConsultada = vendaDao.consultarComCollection(venda.getId());
+        VendaJpa vendaConsultada = vendaDao.consultarComCollection(venda.getId());
         assertEquals(venda.getCodigo(), vendaConsultada.getCodigo());
         assertEquals(Status.CONCLUIDA, vendaConsultada.getStatus());
 
@@ -270,7 +276,7 @@ public class VendaJpaDAOTest {
 
 
     private void excluirProdutos() throws DAOException {
-        Collection<Produto> list = this.produtoDao.buscarTodos();
+        Collection<ProdutoJpa> list = this.produtoDao.buscarTodos();
         list.forEach(prod -> {
             try {
                 this.produtoDao.excluir(prod);
@@ -282,7 +288,7 @@ public class VendaJpaDAOTest {
     }
 
     private void excluirVendas() throws DAOException {
-        Collection<Venda> list = this.vendaExclusaoDao.buscarTodos();
+        Collection<VendaJpa> list = this.vendaExclusaoDao.buscarTodos();
         list.forEach(prod -> {
             try {
                 this.vendaExclusaoDao.excluir(prod);
@@ -293,19 +299,19 @@ public class VendaJpaDAOTest {
         });
     }
 
-    private Produto cadastrarProduto(String codigo, BigDecimal valor) throws TipoChaveNaoEncontradaException, MaisDeUmRegistroException, TableException, DAOException {
-        Produto produto = new Produto();
+    private ProdutoJpa cadastrarProduto(String codigo, BigDecimal valor) throws TipoChaveNaoEncontradaException, MaisDeUmRegistroException, TableException, DAOException {
+        ProdutoJpa produto = new ProdutoJpa();
         produto.setCodigo(codigo);
-        produto.setDescricao("Produto 1");
-        produto.setNome("Produto 1");
+        produto.setDescricao("Descrição");
+        produto.setNome("Produto");
         produto.setValor(valor);
         produto.setMarca("ebac");
         produtoDao.cadastrar(produto);
         return produto;
     }
 
-    private Cliente cadastrarCliente() throws TipoChaveNaoEncontradaException, DAOException {
-        Cliente cliente = new Cliente();
+    private ClienteJpa cadastrarCliente() throws TipoChaveNaoEncontradaException, DAOException {
+        ClienteJpa cliente = new ClienteJpa();
         cliente.setCpf(random.nextLong());
         cliente.setNome("Samuel");
         cliente.setEmail("sam@ebac.com");
@@ -318,8 +324,8 @@ public class VendaJpaDAOTest {
         return cliente;
     }
 
-    private Venda criarVenda(String codigo) {
-        Venda venda = new Venda();
+    private VendaJpa criarVenda(String codigo) {
+        VendaJpa venda = new VendaJpa();
         venda.setCodigo(codigo);
         venda.setDataVenda(Instant.now());
         venda.setCliente(this.cliente);

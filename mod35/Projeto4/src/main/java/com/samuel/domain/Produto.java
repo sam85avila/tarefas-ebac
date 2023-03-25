@@ -1,38 +1,30 @@
-/**
- * 
- */
 package com.samuel.domain;
 
-import anotacao.Tabela;
-import com.samuel.dao.Persistente;
-
-import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "TB_PRODUTO")
-public class Produto implements Persistente {
+import anotacao.ColunaTabela;
+import anotacao.Tabela;
+import anotacao.TipoChave;
+import com.samuel.dao.Persistente;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "produto_seq")
-	@SequenceGenerator(name = "produto_seq", sequenceName = "produto_sq",
-			initialValue = 1, allocationSize = 1)
+@Tabela("TB_PRODUTO")
+public class Produto implements Persistente {
+	
+	@ColunaTabela(dbName = "id", setJavaName = "setId")
 	private Long id;
 
-	@Column(name = "CODIGO", unique = true, nullable = false, length = 10)
+	@TipoChave("getCodigo")
+	@ColunaTabela(dbName = "codigo", setJavaName = "setCodigo")
 	private String codigo;
-
-	@Column(name = "NOME", nullable = false, length = 100)
+	
+	@ColunaTabela(dbName = "nome", setJavaName = "setNome")
 	private String nome;
-
-	@Column(name = "DESRICAO", nullable = false, length = 100)
+	
+	@ColunaTabela(dbName = "descricao", setJavaName = "setDescricao")
 	private String descricao;
-
-	@Column(name = "VALOR", nullable = false)
+	
+	@ColunaTabela(dbName = "valor", setJavaName = "setValor")
 	private BigDecimal valor;
-
-	@Column(name = "MARCA", nullable = false, length = 100)
-	private String marca;
 
 	public String getCodigo() {
 		return codigo;
@@ -73,12 +65,5 @@ public class Produto implements Persistente {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public String getMarca() {
-		return marca;
-	}
-
-	public void setMarca(String marca) {
-		this.marca = marca;
-	}
+	
 }

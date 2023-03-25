@@ -1,17 +1,12 @@
-/**
- * 
- */
 package com.samuel.dao.factory;
+
+import com.samuel.domain.Produto;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.samuel.domain.Produto;
 
-/**
- * @author rodrigo.pires
- *
- */
+
 public class ProdutoFactory {
 
 	

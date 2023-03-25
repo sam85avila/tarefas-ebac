@@ -1,8 +1,8 @@
 package com.samuel.jpa;
 
-import com.samuel.dao.IProdutoJpaDao;
-import com.samuel.dao.ProdutoJpaDao;
-import com.samuel.domain.Produto;
+import com.samuel.dao.jpa.IProdutoJpaDao;
+import com.samuel.dao.jpa.ProdutoJpaDao;
+import com.samuel.domain.jpa.ProdutoJpa;
 import com.samuel.exceptions.DAOException;
 import com.samuel.exceptions.MaisDeUmRegistroException;
 import com.samuel.exceptions.TableException;
@@ -24,7 +24,7 @@ public class ProdutoJpaDAOTest {
 
     @After
     public void end() throws DAOException {
-        Collection<Produto> list = produtoDao.buscarTodos();
+        Collection<ProdutoJpa> list = produtoDao.buscarTodos();
         list.forEach(cli -> {
             try {
                 produtoDao.excluir(cli);
@@ -37,46 +37,46 @@ public class ProdutoJpaDAOTest {
 
     @Test
     public void pesquisar() throws MaisDeUmRegistroException, TableException, DAOException, TipoChaveNaoEncontradaException {
-        Produto produto = criarProduto("A1");
+        ProdutoJpa produto = criarProduto("A1");
         assertNotNull(produto);
-        Produto produtoDB = this.produtoDao.consultar(produto.getId());
+        ProdutoJpa produtoDB = this.produtoDao.consultar(produto.getId());
         assertNotNull(produtoDB);
     }
 
     @Test
     public void salvar() throws TipoChaveNaoEncontradaException, DAOException {
-        Produto produto = criarProduto("A2");
+        ProdutoJpa produto = criarProduto("A2");
         assertNotNull(produto);
     }
 
     @Test
     public void excluir() throws DAOException, TipoChaveNaoEncontradaException, MaisDeUmRegistroException, TableException {
-        Produto produto = criarProduto("A3");
+        ProdutoJpa produto = criarProduto("A3");
         assertNotNull(produto);
         this.produtoDao.excluir(produto);
-        Produto produtoBD = this.produtoDao.consultar(produto.getId());
+        ProdutoJpa produtoBD = this.produtoDao.consultar(produto.getId());
         assertNull(produtoBD);
     }
 
     @Test
-    public void alterarCliente() throws TipoChaveNaoEncontradaException, DAOException, MaisDeUmRegistroException, TableException {
-        Produto produto = criarProduto("A4");
-        produto.setNome("Rodrigo Pires");
+    public void alterarProduto() throws TipoChaveNaoEncontradaException, DAOException, MaisDeUmRegistroException, TableException {
+        ProdutoJpa produto = criarProduto("A4");
+        produto.setNome("Galaxy S21");
         produtoDao.alterar(produto);
-        Produto produtoBD = this.produtoDao.consultar(produto.getId());
+        ProdutoJpa produtoBD = this.produtoDao.consultar(produto.getId());
         assertNotNull(produtoBD);
-        assertEquals("Rodrigo Pires", produtoBD.getNome());
+        assertEquals("Galaxy S21", produtoBD.getNome());
     }
 
     @Test
     public void buscarTodos() throws DAOException, TipoChaveNaoEncontradaException {
         criarProduto("A5");
         criarProduto("A6");
-        Collection<Produto> list = produtoDao.buscarTodos();
+        Collection<ProdutoJpa> list = produtoDao.buscarTodos();
         assertTrue(list != null);
         assertTrue(list.size() == 2);
 
-        for (Produto prod : list) {
+        for (ProdutoJpa prod : list) {
             this.produtoDao.excluir(prod);
         }
 
@@ -86,11 +86,11 @@ public class ProdutoJpaDAOTest {
 
     }
 
-    private Produto criarProduto(String codigo) throws TipoChaveNaoEncontradaException, DAOException {
-        Produto produto = new Produto();
+    private ProdutoJpa criarProduto(String codigo) throws TipoChaveNaoEncontradaException, DAOException {
+        ProdutoJpa produto = new ProdutoJpa();
         produto.setCodigo(codigo);
-        produto.setDescricao("Produto 1");
-        produto.setNome("Produto 1");
+        produto.setDescricao("Descricao");
+        produto.setNome("Produto");
         produto.setValor(BigDecimal.TEN);
         produto.setMarca("ebac");
         produtoDao.cadastrar(produto);

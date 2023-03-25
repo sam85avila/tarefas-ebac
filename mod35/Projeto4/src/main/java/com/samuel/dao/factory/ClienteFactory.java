@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.samuel.dao.factory;
 
 import java.sql.ResultSet;
@@ -8,10 +5,6 @@ import java.sql.SQLException;
 
 import com.samuel.domain.Cliente;
 
-/**
- * @author rodrigo.pires
- *
- */
 public class ClienteFactory {
 
 	public static Cliente convert(ResultSet rs) throws SQLException {
@@ -20,7 +13,7 @@ public class ClienteFactory {
 		cliente.setNome(rs.getString("NOME"));
 		cliente.setCpf(rs.getLong("CPF"));
 		cliente.setEmail(rs.getString("EMAIL"));
-		cliente.setTelelefone(rs.getLong("TELEFONE"));
+		cliente.setTelefone(rs.getLong("TELEFONE"));
 		cliente.setEndereco(rs.getString("ENDERECO"));
 		cliente.setNumero(rs.getInt("NUMERO"));
 		cliente.setCidade(rs.getString("CIDADE"));

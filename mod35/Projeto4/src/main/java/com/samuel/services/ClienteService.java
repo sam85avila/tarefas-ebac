@@ -1,20 +1,17 @@
-/**
- * 
- */
 package com.samuel.services;
 
-import com.samuel.dao.IClienteJpaDao;
+import com.samuel.dao.IClienteDAO;
 import com.samuel.domain.Cliente;
 import com.samuel.exceptions.DAOException;
 import com.samuel.exceptions.MaisDeUmRegistroException;
 import com.samuel.exceptions.TableException;
-import com.samuel.services.generic.jpa.GenericJpaService;
+import com.samuel.services.generic.GenericService;
 
-public class ClienteService extends GenericJpaService<Cliente, Long> implements IClienteService {
+public class ClienteService extends GenericService<Cliente, Long> implements IClienteService {
 	
-	private IClienteJpaDao clienteDAO;
-	
-	public ClienteService(IClienteJpaDao clienteDAO) {
+	private IClienteDAO clienteDAO;
+
+	public ClienteService(IClienteDAO clienteDAO) {
 		super(clienteDAO);
 		//this.clienteDAO = clienteDAO;
 	}
@@ -35,10 +32,10 @@ public class ClienteService extends GenericJpaService<Cliente, Long> implements 
 		return null;
 	}
 
-//	@Override
-//	public void excluir(Long cpf) {
-//		clienteDAO.excluir(cpf);
-//	}
+	@Override
+	public void excluir(Long cpf) throws DAOException {
+		clienteDAO.excluir(cpf);
+	}
 //
 //	@Override
 //	public void alterar(Cliente cliente) throws TipoChaveNaoEncontradaException{
