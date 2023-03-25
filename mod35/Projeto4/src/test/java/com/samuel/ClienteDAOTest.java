@@ -53,7 +53,7 @@ public class ClienteDAOTest {
 		cliente.setCpf(cpf);
 		cliente.setNome("Samuel");
 		cliente.setEmail("samuel@ebac.com");
-		cliente.setCidade("Ceará");
+		cliente.setCidade("Beberibe");
 		cliente.setEndereco("Serra do Félix");
 		cliente.setEstado("Ceará");
 		cliente.setNumero(10);

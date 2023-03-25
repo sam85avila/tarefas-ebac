@@ -35,7 +35,7 @@ public class ClienteDAO extends GenericDAO<Cliente, Long> implements IClienteDAO
 	protected String getQueryInsercao() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("INSERT INTO TB_CLIENTE ");
-		sb.append("(ID, NOME, CPF, EMAIL, TELEFONE, ENDERECO, NUMERO, CIDADE, ESTADO)");
+		sb.append("(ID, NOME, CPF, EMAIL, TELEFONE, ENDERECO, NUMERO, CIDADE, ESTADO) ");
 		sb.append("VALUES (nextval('sq_cliente'),?,?,?,?,?,?,?,?)");
 		return sb.toString();
 	}

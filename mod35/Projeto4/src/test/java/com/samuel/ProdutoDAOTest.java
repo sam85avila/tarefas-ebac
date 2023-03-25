@@ -44,9 +44,10 @@ public class ProdutoDAOTest {
 	private Produto criarProduto(String codigo) throws TipoChaveNaoEncontradaException, DAOException {
 		Produto produto = new Produto();
 		produto.setCodigo(codigo);
-		produto.setDescricao("Produto 1");
-		produto.setNome("Produto 1");
+		produto.setDescricao("Descrição");
+		produto.setNome("Produto");
 		produto.setValor(BigDecimal.TEN);
+		produto.setMarca("Ebac");
 		produtoDao.cadastrar(produto);
 		return produto;
 	}

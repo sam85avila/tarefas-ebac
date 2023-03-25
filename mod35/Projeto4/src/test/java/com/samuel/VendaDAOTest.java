@@ -282,8 +282,9 @@ public class VendaDAOTest {
 	private Produto cadastrarProduto(String codigo, BigDecimal valor) throws TipoChaveNaoEncontradaException, MaisDeUmRegistroException, TableException, DAOException {
 		Produto produto = new Produto();
 		produto.setCodigo(codigo);
-		produto.setDescricao("Produto 1");
-		produto.setNome("Produto 1");
+		produto.setDescricao("Descrição");
+		produto.setNome("Produto");
+		produto.setMarca("ebac");
 		produto.setValor(valor);
 		produtoDao.cadastrar(produto);
 		return produto;
