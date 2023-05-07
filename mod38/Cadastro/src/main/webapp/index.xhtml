@@ -1,0 +1,99 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputStylesheet library="css" name="style.css" />
+	<title>Cadastro de Produtos</title>
+</h:head>
+
+<h:body>
+	<header>
+		<div style="float: center;">
+			<h:graphicImage library="images" name="logo.png" width="100" />
+		</div>
+	</header>
+
+	<h:form id="frm">
+
+		<h1>Informações de Cadastro</h1>
+		<p:panel>
+			<h:panelGrid columns="2">
+				<p:outputLabel value="Produto" />
+				<p:inputText value="#{bean.produto.nome}" size="50"
+					required="true" label="Produto" />
+
+				<p:outputLabel value="Descrição" />
+				<p:inputText value="#{bean.produto.descricao}"
+					size="50" required="true" label="Descrição" />
+
+				<p:outputLabel value="Marca" />
+				<p:selectOneMenu value="#{bean.produto.marca}"
+					required="true" label="Marca">
+					<f:selectItem itemLabel="Selecione a marca"
+						noSelectionOption="true" />
+					<f:selectItem itemLabel="Xiaomi" itemValue="XIAOMI" />
+					<f:selectItem itemLabel="Samsung" itemValue="SAMSUNG" />
+					<f:selectItem itemLabel="Apple" itemValue="APPLE" />
+					<f:selectItem itemLabel="LG" itemValue="LG" />
+					<f:selectItem itemLabel="Motorola" itemValue="MOTOROLA" />
+					<f:selectItem itemLabel="Dell" itemValue="DELL" />
+					<f:selectItem itemLabel="Lenovo" itemValue="LENOVO" />
+					<f:selectItem itemLabel="Acer" itemValue="ACER" />
+					<f:selectItem itemLabel="HP" itemValue="HP" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Valor" />
+				<p:inputText size="6" value="#{bean.produto.valor}"
+					required="true" label="Valor">
+					<f:convertNumber minFractionDigits="2" locale="pt_BR"
+						minIntegerDigits="0" />
+				</p:inputText>
+				<p:outputLabel />
+
+				<p:commandButton value="Cadastrar"
+					action="#{bean.adicionar}" update="frm tabela"
+					style="margin-top: 10px;" />
+			</h:panelGrid>
+			
+			<h1>Lista de Produtos</h1>
+			<p:dataTable value="#{bean.produtos}" var="p" border="1"
+				id="tabela" paginator="true" rows="5">
+				
+				<p:column headerText="Produto" width="200">
+					<p:outputLabel value="#{p.nome}" />
+				</p:column>
+				
+				<p:column headerText="Descrição" width="250">
+					<p:outputLabel value="#{p.descricao}" />
+				</p:column>
+				
+				<p:column headerText="Marca" width="200">
+					<p:outputLabel value="#{p.marca}" />
+				</p:column>
+				
+				<p:column headerText="Valor" width="100">
+					<p:outputLabel value="#{p.valor}" >
+						<f:convertNumber type="currency" currencySymbol="R$" />
+					</p:outputLabel>
+				</p:column>
+		
+				<p:column headerText="" width="100">
+					<p:commandButton icon="ui-icon-pencil" update="@form tabela" 
+						process="@this">
+						<f:setPropertyActionListener value="#{p}" target="#{bean.produto}" />
+					</p:commandButton>
+		
+					<p:commandButton action="#{bean.excluir}" icon="ui-icon-trash"
+						update="tabela" process="@this">
+						<f:setPropertyActionListener value="#{p}" target="#{bean.produto}" />
+					</p:commandButton>
+				</p:column>		
+			</p:dataTable>
+			
+		</p:panel>
+	</h:form>	
+
+</h:body>
+</html>
