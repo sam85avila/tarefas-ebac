@@ -3,25 +3,61 @@ package com.samuel.model;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name = "tb_servico_quantidade")
 public class ServicoQuantidade {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "servico_quantidade_seq")
+	@SequenceGenerator(name = "servico_quantidade_seq", sequenceName = "seq_servico_quantidade",
+						initialValue = 1, allocationSize = 1)
 	private Integer id;
+
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
 	private Servico servico;
-	private Integer quatidade;
-	private BigDecimal valorTotal;
-	private Atendimento atendimento;
 	
+	private Integer quantidade;
+	
+	private BigDecimal valorTotal;
+	
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+	@JoinColumn(name = "id_atendimento_fk",
+				foreignKey = @ForeignKey(name = "fk_serv_quant_atendimento"),
+				referencedColumnName = "id",
+				nullable = false)
+	private Atendimento atendimento;
+
 	public ServicoQuantidade() {
-		
+		this.quantidade = 0;
+		valorTotal = BigDecimal.ZERO;
 	}
 
-	public ServicoQuantidade(Servico servico, Integer quatidade, BigDecimal valorTotal, Atendimento atendimento) {
-		this.servico = servico;
-		this.quatidade = quatidade;
-		this.valorTotal = valorTotal;
-		this.atendimento = atendimento;
+	public void adicionar(Integer quantidade) {
+		this.quantidade = quantidade;
+		BigDecimal novoValor = this.servico.getValor().multiply(BigDecimal.valueOf(quantidade));
+		BigDecimal novoTotal = this.valorTotal.add(novoValor);
+		this.valorTotal = novoTotal;		
 	}
 
+	public void remover(Integer quantidade) {
+		this.quantidade = quantidade;
+		BigDecimal novoValor = this.servico.getValor().multiply(BigDecimal.valueOf(quantidade));
+		this.valorTotal = this.valorTotal.subtract(novoValor);
+	}
+
+	//Getters - Setters
 	public Integer getId() {
 		return id;
 	}
@@ -39,11 +75,11 @@ public class ServicoQuantidade {
 	}
 
 	public Integer getQuatidade() {
-		return quatidade;
+		return quantidade;
 	}
 
-	public void setQuatidade(Integer quatidade) {
-		this.quatidade = quatidade;
+	public void setQuatidade(Integer quantidade) {
+		this.quantidade = quantidade;
 	}
 
 	public BigDecimal getValorTotal() {
@@ -77,9 +113,6 @@ public class ServicoQuantidade {
 			return false;
 		ServicoQuantidade other = (ServicoQuantidade) obj;
 		return Objects.equals(id, other.id);
-	}
-	
-	
-	
+	}	
 	
 }
