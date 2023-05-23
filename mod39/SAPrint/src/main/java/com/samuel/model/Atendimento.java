@@ -41,6 +41,14 @@ public class Atendimento implements Persistente, Serializable{
 				)
 	private Cliente cliente;
 
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
 	private Instant dataAtendimento;
 	private Status status;
 	private BigDecimal valorTotal;
@@ -160,6 +168,8 @@ public class Atendimento implements Persistente, Serializable{
 	public void setValorTotal(BigDecimal valorTotal) {
 		this.valorTotal = valorTotal;
 	}
+
+	
 
 	@Override
 	public int hashCode() {
