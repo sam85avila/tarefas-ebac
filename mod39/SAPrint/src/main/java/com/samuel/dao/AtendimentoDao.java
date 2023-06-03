@@ -61,7 +61,5 @@ public class AtendimentoDao extends GenericDao<Atendimento, Integer> implements 
     public void excluir(Atendimento entity) throws DaoExceptions {
         throw new UnsupportedOperationException("Operação não permitida.");
     }
-
-    
     
 }
