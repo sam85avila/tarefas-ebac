@@ -34,8 +34,8 @@ public class BuscaCliente {
 		return cliente.isPresent() ? true : false;
 	}
 	
-	public Cliente buscarPorCpf(Long cpf) {
-		return clienteRepository.findByCliente(cpf)
+	public Cliente buscarPorCpf(String cpf) {
+		return clienteRepository.findByCpf(cpf)
 				.orElseThrow(() -> new EntityNotFoundException("Recurso não encontrado para CPF informado"));
 	}
 

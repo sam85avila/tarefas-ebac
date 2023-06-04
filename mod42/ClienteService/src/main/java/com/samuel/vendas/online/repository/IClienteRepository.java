@@ -10,5 +10,5 @@ import com.samuel.vendas.online.domain.Cliente;
 @Repository
 public interface IClienteRepository extends MongoRepository<Cliente, String>{
 
-	Optional<Cliente> findByCliente(Long cpf);
+	Optional<Cliente> findByCpf(String cpf);
 }

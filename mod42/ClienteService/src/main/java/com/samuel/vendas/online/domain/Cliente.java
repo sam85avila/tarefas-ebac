@@ -34,9 +34,9 @@ public class Cliente {
 	
 	@NotNull
 	@Indexed(unique = true, background = true)
-	@CPF
+	@CPF(message = "CPF inválido.")
 	@Schema(description="CPF", nullable = false)
-	private Long cpf;
+	private String cpf;
 	
 	@NotNull
 	@Schema(description = "Telefone", nullable = false)

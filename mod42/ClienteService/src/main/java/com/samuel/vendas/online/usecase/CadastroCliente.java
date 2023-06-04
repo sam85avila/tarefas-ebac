@@ -2,9 +2,12 @@ package com.samuel.vendas.online.usecase;
 
 import javax.validation.Valid;
 
+import org.springframework.stereotype.Service;
+
 import com.samuel.vendas.online.domain.Cliente;
 import com.samuel.vendas.online.repository.IClienteRepository;
 
+@Service
 public class CadastroCliente {
 
 	private IClienteRepository clienteRepository;

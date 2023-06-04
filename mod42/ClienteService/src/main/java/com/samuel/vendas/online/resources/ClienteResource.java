@@ -33,6 +33,7 @@ public class ClienteResource {
 	}
 	
 	@GetMapping
+	@Operation(summary = "Busca uma página clientes")
 	public ResponseEntity<Page<Cliente>> buscar(Pageable pageable) {
 		return ResponseEntity.ok(buscaCliente.buscar(pageable));
 	}
@@ -44,17 +45,19 @@ public class ClienteResource {
 	}
 	
 	@GetMapping(value = "iscadastrado/{id}")
+	@Operation(summary = "Verifica se o cliente está cadastrado pelo ID")
 	public ResponseEntity<Boolean> isCadastrado(@PathVariable(value = "id", required = true) String id) {
 		return ResponseEntity.ok(buscaCliente.isCadastrado(id));
 	}
 	
 	@GetMapping(value = "cpf/{cpf}")
 	@Operation(summary = "Busca cliente pelo CPF")
-	public ResponseEntity<Cliente> buscarPorCpf(@PathVariable(value = "cpf", required = true) Long cpf) {
+	public ResponseEntity<Cliente> buscarPorCpf(@PathVariable(value = "cpf", required = true) String cpf) {
 		return ResponseEntity.ok(buscaCliente.buscarPorCpf(cpf));
 	}
 	
 	@PostMapping
+	@Operation(summary = "Cadastra um cliente")
 	public ResponseEntity<Cliente> cadastrar( @RequestBody @Valid Cliente cliente) {
 		return ResponseEntity.ok(cadastroCliente.cadastrar(cliente));
 	}
