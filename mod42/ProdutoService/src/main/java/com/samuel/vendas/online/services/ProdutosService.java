@@ -12,11 +12,11 @@ import com.samuel.vendas.online.domain.Produto.Status;
 import com.samuel.vendas.online.repository.IProdutoRepository;
 
 @Service
-public class ProdutoService {
+public class ProdutosService {
 
 	private IProdutoRepository produtoRepository;
 
-	public ProdutoService(IProdutoRepository produtoRepository) {
+	public ProdutosService(IProdutoRepository produtoRepository) {
 		this.produtoRepository = produtoRepository;
 	}
 	

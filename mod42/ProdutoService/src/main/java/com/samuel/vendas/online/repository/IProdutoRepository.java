@@ -11,7 +11,7 @@ import com.samuel.vendas.online.domain.Produto;
 import com.samuel.vendas.online.domain.Produto.Status;
 
 @Repository
-public interface IProdutoRepository extends MongoRepository<Produto, String>{
+public interface IProdutoRepository extends MongoRepository<Produto, String> {
 
 	Optional<Produto> findByCodigo(String codigo);
 	Page<Produto> findAllByStatus(Pageable pageable, Status status);

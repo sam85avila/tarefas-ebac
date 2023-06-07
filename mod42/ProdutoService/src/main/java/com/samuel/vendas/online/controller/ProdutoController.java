@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.samuel.vendas.online.domain.Produto;
 import com.samuel.vendas.online.domain.Produto.Status;
-import com.samuel.vendas.online.services.ProdutoService;
+import com.samuel.vendas.online.services.ProdutosService;
 
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -24,9 +24,9 @@ import io.swagger.v3.oas.annotations.Operation;
 @RequestMapping(value = "/produtos")
 public class ProdutoController {
 
-	private ProdutoService produtoService;
+	private ProdutosService produtoService;
 
-	public ProdutoController(ProdutoService produtoService) {
+	public ProdutoController(ProdutosService produtoService) {
 		this.produtoService = produtoService;
 	}
 	
