@@ -21,7 +21,7 @@ import com.samuel.vendas.online.services.ProdutosService;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
-@RequestMapping(value = "/produtos")
+@RequestMapping(value = "/produto")
 public class ProdutoController {
 
 	private ProdutosService produtoService;

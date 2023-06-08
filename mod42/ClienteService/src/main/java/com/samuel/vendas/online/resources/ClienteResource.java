@@ -44,7 +44,7 @@ public class ClienteResource {
 		return ResponseEntity.ok(buscaCliente.buscarPorId(id));
 	}
 	
-	@GetMapping(value = "iscadastrado/{id}")
+	@GetMapping(value = "isCadastrado/{id}")
 	@Operation(summary = "Verifica se o cliente está cadastrado pelo ID")
 	public ResponseEntity<Boolean> isCadastrado(@PathVariable(value = "id", required = true) String id) {
 		return ResponseEntity.ok(buscaCliente.isCadastrado(id));
