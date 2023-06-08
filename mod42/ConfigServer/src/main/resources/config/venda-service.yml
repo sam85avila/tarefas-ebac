@@ -19,3 +19,5 @@ application:
   clienteService:
     url: http://localhost:8081
     endpointConsultarCliente: ${application.clienteService.url}/cliente/isCadastrado/{id}
+    
+application-version: 1.0
