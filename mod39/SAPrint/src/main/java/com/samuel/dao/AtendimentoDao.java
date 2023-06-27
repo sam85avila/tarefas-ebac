@@ -6,7 +6,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import com.samuel.dao.generics.GenericDao;
-import com.samuel.exceptions.DaoExceptions;
+import com.samuel.exception.DaoException;
 import com.samuel.model.Atendimento;
 import com.samuel.model.Cliente;
 import com.samuel.model.Servico;
@@ -18,12 +18,12 @@ public class AtendimentoDao extends GenericDao<Atendimento, Integer> implements 
     }
 
     @Override
-    public void finalizarAtendimento(Atendimento atendimento) throws DaoExceptions {
+    public void finalizarAtendimento(Atendimento atendimento) throws DaoException {
         super.alterar(atendimento);
     }
 
     @Override
-    public void cancelarAtendimento(Atendimento atendimento) throws DaoExceptions {
+    public void cancelarAtendimento(Atendimento atendimento) throws DaoException {
         super.alterar(atendimento);
         
     }
@@ -42,7 +42,7 @@ public class AtendimentoDao extends GenericDao<Atendimento, Integer> implements 
     }
 
     @Override
-    public Atendimento cadastrar(Atendimento atendimento) throws DaoExceptions {
+    public Atendimento cadastrar(Atendimento atendimento) throws DaoException {
         try {
             atendimento.getServicos().forEach(s -> {
                 Servico serv = entityManager.merge(s.getServico());
@@ -53,12 +53,12 @@ public class AtendimentoDao extends GenericDao<Atendimento, Integer> implements 
             entityManager.persist(atendimento);
             return atendimento;
         } catch (Exception e) {
-            throw new DaoExceptions("Erro salvando atendimento", e);
+            throw new DaoException("Erro salvando atendimento", e);
         }
     }
 
     @Override
-    public void excluir(Atendimento entity) throws DaoExceptions {
+    public void excluir(Atendimento entity) throws DaoException {
         throw new UnsupportedOperationException("Operação não permitida.");
     }
     

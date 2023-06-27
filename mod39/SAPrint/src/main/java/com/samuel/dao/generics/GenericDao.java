@@ -7,7 +7,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.samuel.exceptions.DaoExceptions;
+import com.samuel.exception.DaoException;
 import com.samuel.model.Persistente;
 
 public class GenericDao <T extends Persistente, E extends Serializable> implements IGenericDao<T, E> {
@@ -22,7 +22,7 @@ public class GenericDao <T extends Persistente, E extends Serializable> implemen
     }
 
     @Override
-    public T cadastrar(T entity) throws DaoExceptions {
+    public T cadastrar(T entity) throws DaoException {
         if (entity.getId() == null) {
             entityManager.persist(entity);
         } else {
@@ -32,7 +32,7 @@ public class GenericDao <T extends Persistente, E extends Serializable> implemen
     }
 
     @Override
-    public void excluir(T entity) throws DaoExceptions {
+    public void excluir(T entity) throws DaoException {
         if (entityManager.contains(entity)) {
             entityManager.remove(entity);
         } else {
@@ -44,17 +44,17 @@ public class GenericDao <T extends Persistente, E extends Serializable> implemen
     }
 
     @Override
-    public T alterar(T entity) throws DaoExceptions {
+    public T alterar(T entity) throws DaoException {
         return entityManager.merge(entity);
     }
 
     @Override
-    public T consultar(E id) throws DaoExceptions {
+    public T consultar(E id) throws DaoException {
         return entityManager.find(this.persistenteClass, id);    
     }
 
     @Override
-    public Collection<T> buscarTodos() throws DaoExceptions {
+    public Collection<T> buscarTodos() throws DaoException {
        List<T> lista = entityManager.createQuery(getSelectSql(), this.persistenteClass).getResultList();
        return lista;
     }
