@@ -30,6 +30,8 @@ public class Servico implements Persistente, Serializable{
 	@Column(nullable = true)
 	private BigDecimal valor;
 	
+	
+	
 	public Servico() {
 		
 	}

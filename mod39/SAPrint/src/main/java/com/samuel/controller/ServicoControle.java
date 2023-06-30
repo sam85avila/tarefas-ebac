@@ -10,33 +10,33 @@ import javax.inject.Named;
 
 import com.samuel.exception.DaoException;
 import com.samuel.exception.NegocioException;
-import com.samuel.model.Cliente;
-import com.samuel.service.IClienteService;
+import com.samuel.model.Servico;
+import com.samuel.service.IServicoService;
 import com.samuel.utility.Message;
 
-@Named(value = "clienteMB")
+@Named(value = "servicoMB")
 @ViewScoped
-public class ClienteController implements Serializable{
-    
+public class ServicoControle implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-	private Cliente cliente;
+	private Servico servico;
 	
 	@Inject
-	private IClienteService service;
+	private IServicoService service;
 	
-	private Collection<Cliente> clientes;
+	private Collection<Servico> servicos;
 	
 	@PostConstruct
 	public void init() throws NegocioException, DaoException {
-		clientes = service.buscarTodos();
+		servicos = service.buscarTodos();
 	}
 	
 	public void adicionar() throws DaoException {
 		try {
-			service.cadastrar(cliente);
-			cliente = new Cliente();
+			service.cadastrar(servico);
+			servico = new Servico();
 			init();
 			Message.info("Salvo com sucesso");
 			
@@ -47,25 +47,24 @@ public class ClienteController implements Serializable{
 	
 	public void excluir() throws DaoException {
 		try {
-			service.excluir(cliente);
+			service.excluir(servico);
 			init();
-			Message.info(cliente.getNome() + " foi removido com sucesso.");
+			Message.info(servico.getNome() + " foi removido com sucesso.");
 			
 		} catch (NegocioException e) {
 			Message.erro(e.getMessage());
 		}
 	}
 
-	public Cliente getCliente() {
-		return cliente;
+	public Servico getServico() {
+		return servico;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setServico(Servico servico) {
+		this.servico = servico;
 	}
 
-	public Collection<Cliente> getClientes() {
-		return clientes;
+	public Collection<Servico> getServicos() {
+		return servicos;
 	}
-
 }
