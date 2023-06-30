@@ -27,13 +27,13 @@ public class Cliente implements Serializable, Persistente{
 	private String nome;
 	
 	@Column(unique = true, nullable = false)
-	private Integer cpf;
+	private Long cpf;
 	
 	public Cliente() {
 		
 	}
 	
-	public Cliente(String nome, Integer cpf) {
+	public Cliente(String nome, Long cpf) {
 		super();
 		this.nome = nome;
 		this.cpf = cpf;
@@ -55,11 +55,11 @@ public class Cliente implements Serializable, Persistente{
 		this.nome = nome;
 	}
 
-	public Integer getCpf() {
+	public Long getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(Integer cpf) {
+	public void setCpf(Long cpf) {
 		this.cpf = cpf;
 	}
 

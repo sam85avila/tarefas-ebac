@@ -13,7 +13,7 @@ import com.samuel.model.Servico;
 
 public class AtendimentoDao extends GenericDao<Atendimento, Integer> implements IAtendimentoDao{
 
-    public AtendimentoDao(Class<Atendimento> persistenteClass) {
+    public AtendimentoDao() {
         super(Atendimento.class);
     }
 

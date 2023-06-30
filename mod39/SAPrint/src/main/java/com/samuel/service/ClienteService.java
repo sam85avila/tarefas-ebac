@@ -13,7 +13,7 @@ import com.samuel.model.Cliente;
 import com.samuel.service.generic.GenericService;
 
 @Stateless
-public class ClienteService extends GenericService<Cliente, Integer> implements IClienteService{
+public class ClienteService extends GenericService<Cliente, Long> implements IClienteService{
 
 	private IClienteDao clienteDao;
 	
@@ -29,7 +29,7 @@ public class ClienteService extends GenericService<Cliente, Integer> implements 
 	}
 
 	@Override
-	public Cliente buscarPorCpf(Integer cpf) throws DaoException {
+	public Cliente buscarPorCpf(Long cpf) throws DaoException {
 		try {
 			clienteDao.consultar(cpf);
 		} catch (MaisDeUmRegistroException | TableException e) {

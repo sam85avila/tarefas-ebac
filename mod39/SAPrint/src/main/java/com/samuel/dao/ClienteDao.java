@@ -7,9 +7,9 @@ import javax.persistence.TypedQuery;
 import com.samuel.dao.generics.GenericDao;
 import com.samuel.model.Cliente;
 
-public class ClienteDao extends GenericDao<Cliente, Integer> implements IClienteDao{
+public class ClienteDao extends GenericDao<Cliente, Long> implements IClienteDao{
 
-    public ClienteDao(Class<Cliente> persistenteClass) {
+    public ClienteDao() {
         super(Cliente.class);
     }
     

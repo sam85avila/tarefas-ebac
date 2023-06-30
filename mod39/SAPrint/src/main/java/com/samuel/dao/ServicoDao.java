@@ -9,7 +9,7 @@ import com.samuel.model.Servico;
 
 public class ServicoDao extends GenericDao<Servico, Integer> implements IServicoDao{
 
-    public ServicoDao(Class<Servico> persistenteClass) {
+    public ServicoDao() {
         super(Servico.class);
     }
 

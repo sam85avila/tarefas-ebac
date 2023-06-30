@@ -9,7 +9,7 @@ import com.samuel.exception.MaisDeUmRegistroException;
 import com.samuel.exception.TableException;
 import com.samuel.model.Persistente;
 
-public class GenericService<T extends Persistente, E extends Serializable> 
+public abstract class GenericService<T extends Persistente, E extends Serializable> 
 	implements IGenericService<T, E> {
 	
 	
