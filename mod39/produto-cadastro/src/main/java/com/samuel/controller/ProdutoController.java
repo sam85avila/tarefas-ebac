@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import javax.annotation.PostConstruct;
-import javax.faces.view.ViewScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -14,7 +14,7 @@ import com.samuel.services.IProdutoService;
 import com.samuel.utility.Message;
 
 @Named(value = "bean")
-@ViewScoped
+@SessionScoped
 public class ProdutoController implements Serializable {
 
 	private static final long serialVersionUID = 1L;

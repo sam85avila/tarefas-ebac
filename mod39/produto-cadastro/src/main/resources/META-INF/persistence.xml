@@ -5,6 +5,8 @@
 
     <persistence-unit name="prod" transaction-type="JTA">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        
+        <class>com.samuel.model.Produto</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
